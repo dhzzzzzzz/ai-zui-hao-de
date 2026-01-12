@@ -39,20 +39,18 @@ All colors MUST be HSL.
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom tool card colors */
+    --tool-gradient-start: 221 83% 53%;
+    --tool-gradient-end: 262 83% 58%;
+    --tool-shadow: 221 83% 53% / 0.15;
   }
 
   .dark {
@@ -91,6 +89,11 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom tool card colors - dark mode */
+    --tool-gradient-start: 221 83% 60%;
+    --tool-gradient-end: 262 83% 65%;
+    --tool-shadow: 221 83% 53% / 0.25;
   }
 }
 
