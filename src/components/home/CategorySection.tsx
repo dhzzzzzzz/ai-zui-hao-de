@@ -67,7 +67,7 @@ export const CategorySection = () => {
             .eq('category_id', category.id)
             .order('is_featured', { ascending: false })
             .order('view_count', { ascending: false })
-            .limit(8);
+            .limit(12);
 
           return {
             ...category,

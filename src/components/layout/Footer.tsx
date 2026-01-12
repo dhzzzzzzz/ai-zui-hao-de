@@ -20,7 +20,7 @@ export const Footer = () => {
 
           {/* Categories */}
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold">热门分类</h3>
+            <h3 className="text-sm font-semibold">工具分类</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link to="/category/ai-chat" className="hover:text-foreground transition-colors">
@@ -40,6 +40,51 @@ export const Footer = () => {
               <li>
                 <Link to="/category/ai-video" className="hover:text-foreground transition-colors">
                   AI视频
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/ai-audio" className="hover:text-foreground transition-colors">
+                  AI音频
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/ai-code" className="hover:text-foreground transition-colors">
+                  代码生成
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/ai-education" className="hover:text-foreground transition-colors">
+                  AI教育
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/ai-music" className="hover:text-foreground transition-colors">
+                  AI音乐
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/ai-health" className="hover:text-foreground transition-colors">
+                  AI健康
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/ai-life" className="hover:text-foreground transition-colors">
+                  AI生活
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/ai-finance" className="hover:text-foreground transition-colors">
+                  AI金融
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/ai-business" className="hover:text-foreground transition-colors">
+                  AI商业
+                </Link>
+              </li>
+              <li>
+                <Link to="/category/ai-design" className="hover:text-foreground transition-colors">
+                  AI设计
                 </Link>
               </li>
             </ul>
@@ -65,7 +110,7 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="mailto:jd2005@bu.edu" className="hover:text-foreground transition-colors">
+                <a href="mailto:johnsonhaozhongdai@gmail.com" className="hover:text-foreground transition-colors">
                   反馈建议
                 </a>
               </li>
@@ -78,13 +123,9 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <span>📧</span>
-                <a href="mailto:jd2005@bu.edu" className="hover:text-foreground transition-colors">
-                  jd2005@bu.edu
+                <a href="mailto:johnsonhaozhongdai@gmail.com" className="hover:text-foreground transition-colors">
+                  johnsonhaozhongdai@gmail.com
                 </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <span>🏫</span>
-                <span>Boston University</span>
               </li>
             </ul>
           </div>
