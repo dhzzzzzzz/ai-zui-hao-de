@@ -19,6 +19,7 @@ export type Database = {
           category_id: string | null
           created_at: string
           description: string | null
+          detailed_description: string | null
           id: string
           is_featured: boolean | null
           is_hot: boolean | null
@@ -35,6 +36,7 @@ export type Database = {
           category_id?: string | null
           created_at?: string
           description?: string | null
+          detailed_description?: string | null
           id?: string
           is_featured?: boolean | null
           is_hot?: boolean | null
@@ -51,6 +53,7 @@ export type Database = {
           category_id?: string | null
           created_at?: string
           description?: string | null
+          detailed_description?: string | null
           id?: string
           is_featured?: boolean | null
           is_hot?: boolean | null
