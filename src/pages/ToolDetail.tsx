@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ExternalLink, Star, Heart, ArrowLeft, MessageSquare } from 'lucide-react';
+import { ExternalLink, Star, Heart, ArrowLeft, MessageSquare, Globe, Eye, Calendar } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -166,71 +166,95 @@ const ToolDetail = () => {
         </Button>
 
         {/* Tool Header */}
-        <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 mb-8">
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-background border shadow-sm">
+        <div className="bg-gradient-to-br from-primary/5 via-primary/10 to-accent/10 rounded-2xl p-8 mb-8 border">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Logo */}
+            <div className="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-background border-2 shadow-lg">
               {tool.logo_url ? (
                 <img
                   src={tool.logo_url}
                   alt={tool.name}
-                  className="h-16 w-16 rounded-xl object-cover"
+                  className="h-20 w-20 rounded-xl object-contain"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                  }}
                 />
-              ) : (
-                <span className="text-4xl font-bold text-primary">
-                  {tool.name.charAt(0)}
-                </span>
-              )}
+              ) : null}
+              <span className={cn(
+                "text-5xl font-bold text-primary",
+                tool.logo_url && "hidden"
+              )}>
+                {tool.name.charAt(0)}
+              </span>
             </div>
 
             <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-3 mb-2">
+              <div className="flex flex-wrap items-center gap-3 mb-3">
                 <h1 className="text-3xl font-bold">{tool.name}</h1>
                 {tool.is_hot && (
-                  <Badge variant="destructive">🔥 热门</Badge>
+                  <Badge variant="destructive" className="text-sm">🔥 热门</Badge>
                 )}
                 {tool.is_featured && (
-                  <Badge>⭐ 精选</Badge>
+                  <Badge className="text-sm">⭐ 精选</Badge>
                 )}
               </div>
 
-              <p className="text-muted-foreground mb-4 max-w-2xl">
+              <p className="text-muted-foreground mb-4 max-w-2xl text-lg">
                 {tool.description || '暂无描述'}
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 mb-4">
+              {/* Stats */}
+              <div className="flex flex-wrap items-center gap-6 mb-5 text-sm">
                 {tool.rating_count > 0 && (
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
                     <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                    <span className="font-semibold">{tool.rating_avg}</span>
+                    <span className="font-semibold text-lg">{Number(tool.rating_avg).toFixed(1)}</span>
                     <span className="text-muted-foreground">
                       ({tool.rating_count} 评价)
                     </span>
                   </div>
                 )}
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <Eye className="h-4 w-4" />
+                  <span>{tool.view_count || 0} 次浏览</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <Calendar className="h-4 w-4" />
+                  <span>收录于 {new Date(tool.created_at).toLocaleDateString('zh-CN')}</span>
+                </div>
+              </div>
+
+              {/* Tags */}
+              <div className="flex flex-wrap items-center gap-2 mb-5">
                 {tool.category && (
-                  <Badge variant="secondary">{tool.category.name}</Badge>
+                  <Badge variant="secondary" className="text-sm">{tool.category.name}</Badge>
                 )}
                 {tool.tags?.map((tag) => (
-                  <Badge key={tag} variant="outline">
+                  <Badge key={tag} variant="outline" className="text-sm">
                     {tag}
                   </Badge>
                 ))}
               </div>
 
-              <div className="flex gap-3">
-                <Button asChild>
+              {/* Actions */}
+              <div className="flex flex-wrap gap-3">
+                <Button size="lg" asChild className="gap-2">
                   <a href={tool.website_url} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="mr-2 h-4 w-4" />
+                    <Globe className="h-5 w-5" />
                     访问官网
+                    <ExternalLink className="h-4 w-4 ml-1" />
                   </a>
                 </Button>
                 <Button
+                  size="lg"
                   variant={isFavorited ? 'secondary' : 'outline'}
                   onClick={() => toggleFavorite.mutate()}
                   disabled={!user}
+                  className="gap-2"
                 >
                   <Heart
-                    className={cn('mr-2 h-4 w-4', isFavorited && 'fill-current text-red-500')}
+                    className={cn('h-5 w-5', isFavorited && 'fill-current text-red-500')}
                   />
                   {isFavorited ? '已收藏' : '收藏'}
                 </Button>
@@ -238,6 +262,99 @@ const ToolDetail = () => {
             </div>
           </div>
         </div>
+
+        {/* Detailed Description */}
+        {(tool as any).detailed_description && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Globe className="h-5 w-5" />
+                详细介绍
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="prose prose-sm dark:prose-invert max-w-none">
+              <div className="whitespace-pre-wrap leading-relaxed">
+                {(tool as any).detailed_description.split('\n').map((line: string, index: number) => {
+                  if (line.startsWith('## ')) {
+                    return <h2 key={index} className="text-xl font-bold mt-6 mb-3 text-foreground">{line.replace('## ', '')}</h2>;
+                  }
+                  if (line.startsWith('### ')) {
+                    return <h3 key={index} className="text-lg font-semibold mt-4 mb-2 text-foreground">{line.replace('### ', '')}</h3>;
+                  }
+                  if (line.startsWith('- **')) {
+                    const match = line.match(/- \*\*(.+?)\*\*: (.+)/);
+                    if (match) {
+                      return (
+                        <div key={index} className="flex items-start gap-2 my-1.5">
+                          <span className="text-primary mt-1">•</span>
+                          <span><strong className="text-foreground">{match[1]}</strong>: <span className="text-muted-foreground">{match[2]}</span></span>
+                        </div>
+                      );
+                    }
+                  }
+                  if (line.startsWith('- ')) {
+                    return (
+                      <div key={index} className="flex items-start gap-2 my-1">
+                        <span className="text-primary mt-1">•</span>
+                        <span className="text-muted-foreground">{line.replace('- ', '')}</span>
+                      </div>
+                    );
+                  }
+                  if (line.trim() === '') return <div key={index} className="h-2" />;
+                  return <p key={index} className="text-muted-foreground my-1">{line}</p>;
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Quick Info Card */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>快速信息</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                <Globe className="h-5 w-5 text-primary" />
+                <div>
+                  <div className="text-sm text-muted-foreground">官方网站</div>
+                  <a 
+                    href={tool.website_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium hover:text-primary truncate block max-w-[200px]"
+                  >
+                    {tool.website_url.replace(/^https?:\/\//, '').split('/')[0]}
+                  </a>
+                </div>
+              </div>
+              {tool.category && (
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                  <div className="h-5 w-5 flex items-center justify-center text-primary">
+                    {tool.category.icon || '📁'}
+                  </div>
+                  <div>
+                    <div className="text-sm text-muted-foreground">分类</div>
+                    <Link 
+                      to={`/category/${tool.category.slug}`}
+                      className="text-sm font-medium hover:text-primary"
+                    >
+                      {tool.category.name}
+                    </Link>
+                  </div>
+                </div>
+              )}
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                <Eye className="h-5 w-5 text-primary" />
+                <div>
+                  <div className="text-sm text-muted-foreground">浏览量</div>
+                  <div className="text-sm font-medium">{tool.view_count || 0} 次</div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Comments Section */}
         <Card>
