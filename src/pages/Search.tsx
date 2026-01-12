@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Search as SearchIcon, Filter, Globe, Shield } from 'lucide-react';
+import { Search as SearchIcon } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { ToolCard } from '@/components/tools/ToolCard';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { ToolFilter, ActiveFilters, filterTools } from '@/components/tools/ToolFilter';
 import { supabase } from '@/integrations/supabase/client';
 import { AiTool } from '@/types/database';
-import { cn } from '@/lib/utils';
 
 // Sanitize search query to prevent SQL injection
 const sanitizeSearchQuery = (query: string): string => {
@@ -19,12 +17,14 @@ const sanitizeSearchQuery = (query: string): string => {
     .replace(/\\/g, '\\\\');
 };
 
-type VpnFilter = 'all' | 'no-vpn' | 'vpn-required';
-
 const Search = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
-  const [vpnFilter, setVpnFilter] = useState<VpnFilter>('all');
+  const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
+    access: null,
+    pricing: null,
+    features: null,
+  });
 
   const { data: tools, isLoading } = useQuery({
     queryKey: ['search', query],
@@ -45,14 +45,11 @@ const Search = () => {
     enabled: !!query.trim(),
   });
 
-  // Filter tools based on VPN requirement
-  const filteredTools = tools?.filter((tool) => {
-    if (vpnFilter === 'all') return true;
-    const needsVpn = tool.tags?.includes('需要梯子');
-    if (vpnFilter === 'no-vpn') return !needsVpn;
-    if (vpnFilter === 'vpn-required') return needsVpn;
-    return true;
-  });
+  const handleFilterChange = (groupKey: string, optionKey: string | null) => {
+    setActiveFilters(prev => ({ ...prev, [groupKey]: optionKey }));
+  };
+
+  const filteredTools = filterTools(tools, activeFilters);
 
   return (
     <Layout>
@@ -65,50 +62,13 @@ const Search = () => {
         </div>
 
         {/* Filter Section */}
-        <div className="flex flex-wrap items-center gap-3 mb-6 p-4 bg-muted/50 rounded-lg border">
-          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-            <Filter className="h-4 w-4" />
-            <span>筛选：</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant={vpnFilter === 'all' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setVpnFilter('all')}
-              className="h-8"
-            >
-              全部
-            </Button>
-            <Button
-              variant={vpnFilter === 'no-vpn' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setVpnFilter('no-vpn')}
-              className={cn(
-                "h-8 gap-1.5",
-                vpnFilter === 'no-vpn' && "bg-green-600 hover:bg-green-700"
-              )}
-            >
-              <Globe className="h-3.5 w-3.5" />
-              国内直连
-            </Button>
-            <Button
-              variant={vpnFilter === 'vpn-required' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setVpnFilter('vpn-required')}
-              className={cn(
-                "h-8 gap-1.5",
-                vpnFilter === 'vpn-required' && "bg-orange-600 hover:bg-orange-700"
-              )}
-            >
-              <Shield className="h-3.5 w-3.5" />
-              需要梯子
-            </Button>
-          </div>
-          {vpnFilter !== 'all' && (
-            <Badge variant="secondary" className="ml-auto">
-              已筛选 {filteredTools?.length || 0} 个
-            </Badge>
-          )}
+        <div className="mb-6">
+          <ToolFilter
+            activeFilters={activeFilters}
+            onFilterChange={handleFilterChange}
+            filteredCount={filteredTools.length}
+            totalCount={tools?.length}
+          />
         </div>
 
         {isLoading ? (
@@ -117,11 +77,10 @@ const Search = () => {
               <Skeleton key={i} className="h-32" />
             ))}
           </div>
-        ) : filteredTools && filteredTools.length > 0 ? (
+        ) : filteredTools.length > 0 ? (
           <>
             <p className="text-muted-foreground mb-6">
               共找到 {filteredTools.length} 个结果
-              {vpnFilter !== 'all' && ` (${vpnFilter === 'no-vpn' ? '国内直连' : '需要梯子'})`}
             </p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {filteredTools.map((tool) => (
@@ -134,9 +93,7 @@ const Search = () => {
             <SearchIcon className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
             <h2 className="text-xl font-semibold mb-2">未找到相关工具</h2>
             <p className="text-muted-foreground">
-              {vpnFilter !== 'all' 
-                ? '尝试更换筛选条件或使用不同的关键词' 
-                : '尝试使用不同的关键词搜索'}
+              尝试更换筛选条件或使用不同的关键词
             </p>
           </div>
         )}
