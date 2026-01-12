@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Flame, TrendingUp, Sparkles, Filter, Globe, Shield } from 'lucide-react';
+import { Flame, TrendingUp, Sparkles } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { ToolCard } from '@/components/tools/ToolCard';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { ToolFilter, ActiveFilters, filterTools } from '@/components/tools/ToolFilter';
 import { AiTool } from '@/types/database';
 import { cn } from '@/lib/utils';
 
-type VpnFilter = 'all' | 'no-vpn' | 'vpn-required';
-
 export const HotTools = () => {
-  const [vpnFilter, setVpnFilter] = useState<VpnFilter>('all');
+  const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
+    access: null,
+    pricing: null,
+    features: null,
+  });
 
   const { data: tools, isLoading } = useQuery({
     queryKey: ['hot-tools'],
@@ -29,14 +30,11 @@ export const HotTools = () => {
     },
   });
 
-  // Filter tools based on VPN requirement
-  const filteredTools = tools?.filter((tool) => {
-    if (vpnFilter === 'all') return true;
-    const needsVpn = tool.tags?.includes('需要梯子');
-    if (vpnFilter === 'no-vpn') return !needsVpn;
-    if (vpnFilter === 'vpn-required') return needsVpn;
-    return true;
-  });
+  const handleFilterChange = (groupKey: string, optionKey: string | null) => {
+    setActiveFilters(prev => ({ ...prev, [groupKey]: optionKey }));
+  };
+
+  const filteredTools = filterTools(tools, activeFilters);
 
   return (
     <section className="relative py-16 overflow-hidden">
@@ -63,50 +61,13 @@ export const HotTools = () => {
         </div>
 
         {/* Filter Section */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-8 p-4 bg-muted/50 rounded-lg border max-w-2xl mx-auto">
-          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-            <Filter className="h-4 w-4" />
-            <span>筛选：</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant={vpnFilter === 'all' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setVpnFilter('all')}
-              className="h-8"
-            >
-              全部
-            </Button>
-            <Button
-              variant={vpnFilter === 'no-vpn' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setVpnFilter('no-vpn')}
-              className={cn(
-                "h-8 gap-1.5",
-                vpnFilter === 'no-vpn' && "bg-green-600 hover:bg-green-700"
-              )}
-            >
-              <Globe className="h-3.5 w-3.5" />
-              国内直连
-            </Button>
-            <Button
-              variant={vpnFilter === 'vpn-required' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setVpnFilter('vpn-required')}
-              className={cn(
-                "h-8 gap-1.5",
-                vpnFilter === 'vpn-required' && "bg-orange-600 hover:bg-orange-700"
-              )}
-            >
-              <Shield className="h-3.5 w-3.5" />
-              需要梯子
-            </Button>
-          </div>
-          {vpnFilter !== 'all' && (
-            <Badge variant="secondary">
-              {filteredTools?.length || 0} 个
-            </Badge>
-          )}
+        <div className="max-w-4xl mx-auto mb-8">
+          <ToolFilter
+            activeFilters={activeFilters}
+            onFilterChange={handleFilterChange}
+            filteredCount={filteredTools.length}
+            totalCount={tools?.length}
+          />
         </div>
 
         {/* Tools Grid */}
@@ -125,7 +86,7 @@ export const HotTools = () => {
               </div>
             ))}
           </div>
-        ) : filteredTools && filteredTools.length > 0 ? (
+        ) : filteredTools.length > 0 ? (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredTools.map((tool, index) => (
               <div 
@@ -143,9 +104,7 @@ export const HotTools = () => {
               <Sparkles className="h-10 w-10 text-muted-foreground" />
             </div>
             <p className="text-muted-foreground">
-              {vpnFilter !== 'all' 
-                ? '该筛选条件下暂无热门工具' 
-                : '暂无热门工具'}
+              该筛选条件下暂无热门工具
             </p>
           </div>
         )}
