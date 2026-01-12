@@ -4,7 +4,7 @@ export const Footer = () => {
   return (
     <footer className="border-t bg-muted/50">
       <div className="container py-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2">
@@ -19,9 +19,9 @@ export const Footer = () => {
           </div>
 
           {/* Categories */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:col-span-2">
             <h3 className="text-sm font-semibold">工具分类</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm text-muted-foreground">
               <li>
                 <Link to="/category/ai-chat" className="hover:text-foreground transition-colors">
                   AI对话
