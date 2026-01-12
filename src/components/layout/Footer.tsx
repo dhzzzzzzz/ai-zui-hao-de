@@ -50,8 +50,8 @@ export const Footer = () => {
             <h3 className="text-sm font-semibold">快速链接</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link to="/about" className="hover:text-foreground transition-colors">
-                  关于我们
+                <Link to="/" className="hover:text-foreground transition-colors">
+                  首页
                 </Link>
               </li>
               <li>
@@ -60,9 +60,14 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-foreground transition-colors">
-                  联系我们
+                <Link to="/category/ai-chat" className="hover:text-foreground transition-colors">
+                  全部分类
                 </Link>
+              </li>
+              <li>
+                <a href="mailto:jd2005@bu.edu" className="hover:text-foreground transition-colors">
+                  反馈建议
+                </a>
               </li>
             </ul>
           </div>
@@ -71,7 +76,16 @@ export const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold">联系方式</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>邮箱：contact@ainav.com</li>
+              <li className="flex items-center gap-2">
+                <span>📧</span>
+                <a href="mailto:jd2005@bu.edu" className="hover:text-foreground transition-colors">
+                  jd2005@bu.edu
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <span>🏫</span>
+                <span>Boston University</span>
+              </li>
             </ul>
           </div>
         </div>
