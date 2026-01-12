@@ -7,6 +7,14 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { supabase } from '@/integrations/supabase/client';
 import { AiTool } from '@/types/database';
 
+// Sanitize search query to prevent SQL injection
+const sanitizeSearchQuery = (query: string): string => {
+  return query
+    .replace(/%/g, '\\%')
+    .replace(/_/g, '\\_')
+    .replace(/\\/g, '\\\\');
+};
+
 const Search = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
@@ -16,10 +24,11 @@ const Search = () => {
     queryFn: async () => {
       if (!query.trim()) return [];
 
+      const sanitizedQuery = sanitizeSearchQuery(query.trim());
       const { data, error } = await supabase
         .from('ai_tools')
         .select('*')
-        .or(`name.ilike.%${query}%,description.ilike.%${query}%`)
+        .or(`name.ilike.%${sanitizedQuery}%,description.ilike.%${sanitizedQuery}%`)
         .order('view_count', { ascending: false })
         .limit(50);
 
