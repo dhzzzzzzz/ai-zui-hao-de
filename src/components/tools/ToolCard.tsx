@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, Star, Heart } from 'lucide-react';
+import { ExternalLink, Star, Heart, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -19,58 +20,100 @@ export const ToolCard = ({
   isFavorited = false,
   onToggleFavorite,
 }: ToolCardProps) => {
+  const [imgError, setImgError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+
   return (
-    <Card className="group relative overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
-      <CardContent className="p-4">
+    <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 border-border/50 bg-gradient-to-br from-card to-card/80">
+      {/* Decorative gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      
+      <CardContent className="relative p-5">
         <div className="flex items-start gap-4">
-          {/* Logo */}
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border">
-            {tool.logo_url ? (
-              <img
-                src={tool.logo_url}
-                alt={tool.name}
-                className="h-10 w-10 rounded-lg object-cover"
-              />
-            ) : (
-              <span className="text-xl font-bold text-primary">
-                {tool.name.charAt(0)}
-              </span>
-            )}
-          </div>
+          {/* Logo Container */}
+          <Link to={`/tool/${tool.id}`} className="shrink-0">
+            <div className={cn(
+              "relative flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-300",
+              "bg-gradient-to-br from-background via-background to-muted/50",
+              "border-2 border-border/50 group-hover:border-primary/30",
+              "shadow-sm group-hover:shadow-lg group-hover:shadow-primary/10",
+              "group-hover:scale-105"
+            )}>
+              {/* Gradient ring on hover */}
+              <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-sm" />
+              
+              {tool.logo_url && !imgError ? (
+                <>
+                  {/* Loading skeleton */}
+                  {!imgLoaded && (
+                    <div className="absolute inset-3 rounded-xl bg-muted animate-pulse" />
+                  )}
+                  <img
+                    src={tool.logo_url}
+                    alt={tool.name}
+                    className={cn(
+                      "h-10 w-10 rounded-xl object-contain transition-all duration-300",
+                      imgLoaded ? "opacity-100" : "opacity-0"
+                    )}
+                    onLoad={() => setImgLoaded(true)}
+                    onError={() => setImgError(true)}
+                  />
+                </>
+              ) : (
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80">
+                  <span className="text-lg font-bold text-primary-foreground">
+                    {tool.name.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+              )}
+            </div>
+          </Link>
 
           {/* Content */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
+          <div className="flex-1 min-w-0 space-y-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Link
                 to={`/tool/${tool.id}`}
-                className="font-semibold text-foreground hover:text-primary transition-colors truncate"
+                className="font-semibold text-foreground hover:text-primary transition-colors truncate text-base"
               >
                 {tool.name}
               </Link>
               {tool.is_hot && (
-                <Badge variant="destructive" className="shrink-0">
-                  🔥 热门
+                <Badge variant="destructive" className="shrink-0 text-xs px-2 py-0.5 bg-gradient-to-r from-orange-500 to-red-500 border-0">
+                  <Sparkles className="h-3 w-3 mr-1" />
+                  热门
+                </Badge>
+              )}
+              {tool.is_featured && (
+                <Badge className="shrink-0 text-xs px-2 py-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 border-0 text-white">
+                  ⭐ 精选
                 </Badge>
               )}
             </div>
 
-            <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
               {tool.description || '暂无描述'}
             </p>
 
             {/* Rating & Tags */}
-            <div className="mt-2 flex items-center gap-3">
+            <div className="flex items-center gap-2 flex-wrap pt-1">
               {tool.rating_count > 0 && (
-                <div className="flex items-center gap-1 text-sm">
-                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  <span>{tool.rating_avg.toFixed(1)}</span>
-                  <span className="text-muted-foreground">
+                <div className="flex items-center gap-1 text-sm bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 rounded-full">
+                  <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                  <span className="font-medium text-amber-700 dark:text-amber-400">
+                    {Number(tool.rating_avg).toFixed(1)}
+                  </span>
+                  <span className="text-amber-600/70 dark:text-amber-500/70 text-xs">
                     ({tool.rating_count})
                   </span>
                 </div>
               )}
               {tool.tags?.slice(0, 2).map((tag) => (
-                <Badge key={tag} variant="secondary" className="text-xs">
+                <Badge 
+                  key={tag} 
+                  variant="secondary" 
+                  className="text-xs px-2 py-0.5 bg-secondary/50 hover:bg-secondary transition-colors"
+                >
                   {tag}
                 </Badge>
               ))}
@@ -79,7 +122,12 @@ export const ToolCard = ({
 
           {/* Actions */}
           <div className="flex flex-col gap-2 shrink-0">
-            <Button size="sm" variant="outline" asChild>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              asChild
+              className="h-9 w-9 p-0 rounded-xl border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all"
+            >
               <a href={tool.website_url} target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="h-4 w-4" />
               </a>
@@ -89,9 +137,14 @@ export const ToolCard = ({
                 size="sm"
                 variant="ghost"
                 onClick={onToggleFavorite}
-                className={cn(isFavorited && 'text-red-500')}
+                className={cn(
+                  "h-9 w-9 p-0 rounded-xl transition-all",
+                  isFavorited 
+                    ? 'text-red-500 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-950/50' 
+                    : 'hover:bg-muted'
+                )}
               >
-                <Heart className={cn('h-4 w-4', isFavorited && 'fill-current')} />
+                <Heart className={cn('h-4 w-4 transition-transform', isFavorited && 'fill-current scale-110')} />
               </Button>
             )}
           </div>
