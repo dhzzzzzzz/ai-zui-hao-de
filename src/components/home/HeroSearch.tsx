@@ -43,7 +43,7 @@ export const HeroSearch = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 animate-fade-in">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium">发现 1000+ 精选AI工具</span>
+            <span className="text-sm font-medium">发现 2000+ 精选AI工具</span>
             <Zap className="h-4 w-4 text-amber-500" />
           </div>
 
@@ -135,7 +135,7 @@ export const HeroSearch = () => {
           {/* Stats */}
           <div className="mt-12 grid grid-cols-3 gap-8 max-w-lg mx-auto animate-fade-in" style={{ animationDelay: '600ms' }}>
             {[
-              { label: 'AI工具', value: '1000+' },
+              { label: 'AI工具', value: '2000+' },
               { label: '分类', value: '13+' },
               { label: '每日更新', value: '20+' },
             ].map((stat) => (
