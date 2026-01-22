@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Search, Sparkles, Zap, Bot } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Search, Sparkles, Zap, Bot, Brain, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -106,6 +106,26 @@ export const HeroSearch = () => {
               </Button>
             </div>
           </form>
+
+          {/* Smart Search CTA */}
+          <div className="mt-6 animate-fade-in" style={{ animationDelay: '350ms' }}>
+            <Link to="/smart-search">
+              <Button
+                variant="outline"
+                className={cn(
+                  "gap-2 rounded-full px-6 border-primary/30 bg-primary/5",
+                  "hover:bg-primary/10 hover:border-primary/50 transition-all duration-300",
+                  "group"
+                )}
+              >
+                <Brain className="h-4 w-4 text-primary" />
+                <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent font-medium">
+                  不知道选什么？试试AI智能推荐
+                </span>
+                <ArrowRight className="h-4 w-4 text-primary transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
+          </div>
 
           {/* Popular Searches */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 animate-fade-in" style={{ animationDelay: '400ms' }}>
