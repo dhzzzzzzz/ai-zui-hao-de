@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Search, User, LogIn, Settings } from 'lucide-react';
+import { Search, User, LogIn, Settings, SlidersHorizontal, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -50,6 +50,22 @@ export const Header = () => {
             />
           </div>
         </form>
+
+        {/* Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-1">
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/explore" className="gap-1.5">
+              <SlidersHorizontal className="h-4 w-4" />
+              探索
+            </Link>
+          </Button>
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/smart-search" className="gap-1.5">
+              <Sparkles className="h-4 w-4" />
+              智能推荐
+            </Link>
+          </Button>
+        </nav>
 
         {/* Right Section */}
         <div className="flex items-center space-x-4">
