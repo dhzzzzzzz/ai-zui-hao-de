@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { 
   Filter, Globe, Shield, DollarSign, Gift, Sparkles, Code, Building2,
   MessageSquare, Image, Video, Music, FileText, Mic, Heart, Briefcase,
@@ -8,6 +8,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { AiTool } from '@/types/database';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 export type FilterOption = {
@@ -153,7 +154,30 @@ interface ToolFilterProps {
   totalCount?: number;
   compact?: boolean;
   showAdvanced?: boolean;
+  tools?: AiTool[]; // Pass all tools to calculate counts per filter option
 }
+
+// Helper to check if a single tool matches a specific filter option
+const toolMatchesOption = (tool: AiTool, groupKey: string, optionKey: string): boolean => {
+  const toolTags = (tool.tags || []).map(t => t.toLowerCase());
+  const group = filterGroups[groupKey];
+  const option = group?.options.find(o => o.key === optionKey);
+  if (!option) return false;
+
+  // Special handling for "no-vpn"
+  if (optionKey === 'no-vpn') {
+    const needsVpn = toolTags.some(t => t.includes('需要梯子') || t.includes('vpn') || t.includes('梯子'));
+    return !needsVpn;
+  }
+
+  // For other filters
+  return option.tags.some(filterTag => {
+    const lowerFilterTag = filterTag.toLowerCase();
+    return toolTags.some(toolTag =>
+      toolTag.includes(lowerFilterTag) || lowerFilterTag.includes(toolTag)
+    );
+  });
+};
 
 export const ToolFilter = ({ 
   activeFilters, 
@@ -161,12 +185,26 @@ export const ToolFilter = ({
   filteredCount,
   totalCount,
   compact = false,
-  showAdvanced = true
+  showAdvanced = true,
+  tools
 }: ToolFilterProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   
   const hasActiveFilters = Object.values(activeFilters).some(v => v !== null);
   const activeCount = Object.values(activeFilters).filter(v => v !== null).length;
+
+  // Memoized counts for each filter option (cached until tools array changes)
+  const optionCounts = useMemo(() => {
+    if (!tools || tools.length === 0) return {};
+    const counts: Record<string, Record<string, number>> = {};
+    for (const groupKey of Object.keys(filterGroups)) {
+      counts[groupKey] = {};
+      for (const option of filterGroups[groupKey].options) {
+        counts[groupKey][option.key] = tools.filter(t => toolMatchesOption(t, groupKey, option.key)).length;
+      }
+    }
+    return counts;
+  }, [tools]);
 
   const clearAllFilters = () => {
     Object.keys(filterGroups).forEach(groupKey => {
@@ -174,34 +212,43 @@ export const ToolFilter = ({
     });
   };
 
-  const renderFilterGroup = (groupKey: string, group: FilterGroup) => (
-    <div key={groupKey} className="flex items-center gap-1.5 flex-wrap">
-      <span className="text-xs text-muted-foreground hidden sm:inline-flex items-center gap-1">
-        {group.icon}
-        {group.label}:
-      </span>
-      <div className="flex gap-1 flex-wrap">
-        {group.options.map((option) => {
-          const isActive = activeFilters[groupKey] === option.key;
-          return (
-            <Button
-              key={option.key}
-              variant={isActive ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => onFilterChange(groupKey, isActive ? null : option.key)}
-              className={cn(
-                "h-7 text-xs gap-1 px-2",
-                isActive && option.activeClass
-              )}
-            >
-              {option.icon}
-              <span className="hidden sm:inline">{option.label}</span>
-            </Button>
-          );
-        })}
+  const renderFilterGroup = (groupKey: string, group: FilterGroup) => {
+    const groupCounts = optionCounts[groupKey] || {};
+    return (
+      <div key={groupKey} className="flex items-center gap-1.5 flex-wrap">
+        <span className="text-xs text-muted-foreground hidden sm:inline-flex items-center gap-1">
+          {group.icon}
+          {group.label}:
+        </span>
+        <div className="flex gap-1 flex-wrap">
+          {group.options.map((option) => {
+            const isActive = activeFilters[groupKey] === option.key;
+            const count = groupCounts[option.key];
+            return (
+              <Button
+                key={option.key}
+                variant={isActive ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => onFilterChange(groupKey, isActive ? null : option.key)}
+                className={cn(
+                  "h-7 text-xs gap-1 px-2",
+                  isActive && option.activeClass
+                )}
+              >
+                {option.icon}
+                <span className="hidden sm:inline">{option.label}</span>
+                {count !== undefined && (
+                  <Badge variant={isActive ? 'secondary' : 'outline'} className="ml-0.5 h-4 min-w-[1.25rem] px-1 text-[10px] font-medium">
+                    {count}
+                  </Badge>
+                )}
+              </Button>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className={cn(
@@ -284,6 +331,7 @@ export const ToolFilter = ({
                     <div className="flex gap-1 flex-wrap">
                       {group.options.map((option) => {
                         const isActive = activeFilters[groupKey] === option.key;
+                        const count = (optionCounts[groupKey] || {})[option.key];
                         return (
                           <Button
                             key={option.key}
@@ -297,6 +345,11 @@ export const ToolFilter = ({
                           >
                             {option.icon}
                             {option.label}
+                            {count !== undefined && (
+                              <Badge variant={isActive ? 'secondary' : 'outline'} className="ml-0.5 h-4 min-w-[1.25rem] px-1 text-[10px] font-medium">
+                                {count}
+                              </Badge>
+                            )}
                           </Button>
                         );
                       })}
