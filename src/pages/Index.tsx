@@ -9,13 +9,12 @@ const Index = () => {
     <Layout>
       <HeroSearch />
       
-      {/* Main content with news sidebar */}
+      {/* Hot Tools section with news sidebar */}
       <div className="container">
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-8">
-          {/* Left: Main Tools Content */}
+          {/* Left: Hot Tools */}
           <div className="min-w-0">
             <HotTools />
-            <CategorySection />
           </div>
           
           {/* Right: News Sidebar - Hidden on smaller screens */}
@@ -26,6 +25,9 @@ const Index = () => {
           </aside>
         </div>
       </div>
+      
+      {/* Categories - Full width, separate from sidebar layout */}
+      <CategorySection />
     </Layout>
   );
 };
