@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_news: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string | null
+          is_hot: boolean | null
+          published_at: string
+          source: string | null
+          source_url: string | null
+          summary: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          is_hot?: boolean | null
+          published_at?: string
+          source?: string | null
+          source_url?: string | null
+          summary?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          is_hot?: boolean | null
+          published_at?: string
+          source?: string | null
+          source_url?: string | null
+          summary?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       ai_tools: {
         Row: {
           category_id: string | null

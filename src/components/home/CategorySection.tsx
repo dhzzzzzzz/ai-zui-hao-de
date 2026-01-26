@@ -120,7 +120,7 @@ export const CategorySection = () => {
 
   return (
     <section className="py-16 bg-gradient-to-b from-muted/30 via-background to-muted/30">
-      <div className="container">
+      <div>
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
