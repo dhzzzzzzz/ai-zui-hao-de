@@ -16,17 +16,31 @@ export const HotTools = () => {
   });
 
   const { data: tools, isLoading } = useQuery({
-    queryKey: ['hot-tools'],
+    queryKey: ['home-tools-for-filtering'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('ai_tools')
-        .select('*')
-        .eq('is_hot', true)
-        .order('view_count', { ascending: false })
-        .limit(8);
+      // IMPORTANT: 主页筛选需要覆盖“全部工具库”，不能仅限于 is_hot。
+      // PostgREST 通常对单次返回行数有上限（常见为 1000），这里做分段拉取以覆盖 1300+ 数据。
+      const selectFields =
+        'id,name,description,website_url,logo_url,category_id,is_featured,is_hot,view_count,rating_avg,rating_count,tags,created_at,updated_at';
 
-      if (error) throw error;
-      return data as AiTool[];
+      const [first, second] = await Promise.all([
+        supabase
+          .from('ai_tools')
+          .select(selectFields)
+          .order('view_count', { ascending: false })
+          .range(0, 999),
+        supabase
+          .from('ai_tools')
+          .select(selectFields)
+          .order('view_count', { ascending: false })
+          .range(1000, 1999),
+      ]);
+
+      if (first.error) throw first.error;
+      if (second.error) throw second.error;
+
+      const all = ([...(first.data || []), ...(second.data || [])] as unknown) as AiTool[];
+      return all;
     },
   });
 
@@ -35,6 +49,7 @@ export const HotTools = () => {
   };
 
   const filteredTools = filterTools(tools, activeFilters);
+  const visibleTools = filteredTools.slice(0, 8);
 
   return (
     <section className="relative py-16 overflow-hidden">
@@ -88,7 +103,7 @@ export const HotTools = () => {
           </div>
         ) : filteredTools.length > 0 ? (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filteredTools.map((tool, index) => (
+            {visibleTools.map((tool, index) => (
               <div 
                 key={tool.id}
                 className="animate-fade-in"
