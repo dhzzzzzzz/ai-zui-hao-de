@@ -82,6 +82,7 @@ export const HotTools = () => {
             onFilterChange={handleFilterChange}
             filteredCount={filteredTools.length}
             totalCount={tools?.length}
+            tools={tools}
           />
         </div>
 

@@ -176,6 +176,7 @@ const ExplorePage = () => {
             filteredCount={filteredTools.length}
             totalCount={tools?.length}
             showAdvanced={true}
+            tools={tools}
           />
         </div>
 
