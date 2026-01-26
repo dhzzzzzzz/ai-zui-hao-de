@@ -319,7 +319,7 @@ export const filterTools = <T extends { tags?: string[] | null }>(
   if (!tools) return [];
   
   return tools.filter((tool) => {
-    const tags = tool.tags || [];
+    const toolTags = (tool.tags || []).map(t => t.toLowerCase());
     
     // Check each filter group
     for (const [groupKey, optionKey] of Object.entries(activeFilters)) {
@@ -330,14 +330,20 @@ export const filterTools = <T extends { tags?: string[] | null }>(
       
       if (!option) continue;
       
-      // Special handling for "no-vpn" filter
+      // Special handling for "no-vpn" filter - show tools WITHOUT '需要梯子' tag
       if (optionKey === 'no-vpn') {
-        if (tags.includes('需要梯子')) return false;
+        const needsVpn = toolTags.some(t => t.includes('需要梯子') || t.includes('vpn') || t.includes('梯子'));
+        if (needsVpn) return false;
         continue;
       }
       
-      // For other filters, check if any of the option's tags match
-      const hasMatchingTag = option.tags.some(tag => tags.includes(tag));
+      // For other filters, check if any of the option's tags match (case-insensitive, partial match)
+      const hasMatchingTag = option.tags.some(filterTag => {
+        const lowerFilterTag = filterTag.toLowerCase();
+        return toolTags.some(toolTag => 
+          toolTag.includes(lowerFilterTag) || lowerFilterTag.includes(toolTag)
+        );
+      });
       if (!hasMatchingTag) return false;
     }
     
