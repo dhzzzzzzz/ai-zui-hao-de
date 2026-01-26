@@ -77,13 +77,13 @@ export const filterGroups: Record<string, FilterGroup> = {
     label: '分类',
     icon: <Palette className="h-4 w-4" />,
     options: [
-      { key: 'chat', label: '对话', icon: <MessageSquare className="h-3.5 w-3.5" />, tags: ['对话'], activeClass: 'bg-blue-600 hover:bg-blue-700' },
-      { key: 'image', label: '绘画', icon: <Image className="h-3.5 w-3.5" />, tags: ['绘画', '图像', '图片'], activeClass: 'bg-purple-600 hover:bg-purple-700' },
-      { key: 'video', label: '视频', icon: <Video className="h-3.5 w-3.5" />, tags: ['视频', '视频生成'], activeClass: 'bg-red-600 hover:bg-red-700' },
-      { key: 'audio', label: '音频', icon: <Mic className="h-3.5 w-3.5" />, tags: ['音频', '语音', '配音'], activeClass: 'bg-amber-600 hover:bg-amber-700' },
-      { key: 'music', label: '音乐', icon: <Music className="h-3.5 w-3.5" />, tags: ['音乐', '歌曲', '作曲'], activeClass: 'bg-pink-600 hover:bg-pink-700' },
-      { key: 'writing', label: '写作', icon: <FileText className="h-3.5 w-3.5" />, tags: ['写作', '文案', '润色'], activeClass: 'bg-indigo-600 hover:bg-indigo-700' },
-      { key: 'code', label: '编程', icon: <Code className="h-3.5 w-3.5" />, tags: ['代码', '编程', '开发'], activeClass: 'bg-cyan-600 hover:bg-cyan-700' },
+      { key: 'chat', label: '对话', icon: <MessageSquare className="h-3.5 w-3.5" />, tags: ['对话', '聊天', '会话'], activeClass: 'bg-blue-600 hover:bg-blue-700' },
+      { key: 'image', label: '绘画', icon: <Image className="h-3.5 w-3.5" />, tags: ['绘画', '图像', '照片', '修图', '抠图'], activeClass: 'bg-purple-600 hover:bg-purple-700' },
+      { key: 'video', label: '视频', icon: <Video className="h-3.5 w-3.5" />, tags: ['视频', '视频生成', '剪辑', '短视频'], activeClass: 'bg-red-600 hover:bg-red-700' },
+      { key: 'audio', label: '音频', icon: <Mic className="h-3.5 w-3.5" />, tags: ['音频', '语音', '配音', '降噪', '录音'], activeClass: 'bg-amber-600 hover:bg-amber-700' },
+      { key: 'music', label: '音乐', icon: <Music className="h-3.5 w-3.5" />, tags: ['音乐', '歌曲', '作曲', '歌声', '混音'], activeClass: 'bg-pink-600 hover:bg-pink-700' },
+      { key: 'writing', label: '写作', icon: <FileText className="h-3.5 w-3.5" />, tags: ['写作', '文案', '润色', '文章', '文档'], activeClass: 'bg-indigo-600 hover:bg-indigo-700' },
+      { key: 'code', label: '编程', icon: <Code className="h-3.5 w-3.5" />, tags: ['代码', '编程', '开发', '前端', '后端'], activeClass: 'bg-cyan-600 hover:bg-cyan-700' },
     ]
   },
   features: {
@@ -93,7 +93,7 @@ export const filterGroups: Record<string, FilterGroup> = {
       { key: 'opensource', label: '开源', icon: <Code className="h-3.5 w-3.5" />, tags: ['开源'], activeClass: 'bg-purple-600 hover:bg-purple-700' },
       { key: 'chinese', label: '国产', icon: <Sparkles className="h-3.5 w-3.5" />, tags: ['国产'], activeClass: 'bg-red-600 hover:bg-red-700' },
       { key: 'chinese-friendly', label: '中文友好', icon: <Languages className="h-3.5 w-3.5" />, tags: ['中文', '多语言'], activeClass: 'bg-rose-600 hover:bg-rose-700' },
-      { key: 'enterprise', label: '企业版', icon: <Building2 className="h-3.5 w-3.5" />, tags: ['企业', '企业版'], activeClass: 'bg-slate-600 hover:bg-slate-700' },
+      { key: 'enterprise', label: '企业版', icon: <Building2 className="h-3.5 w-3.5" />, tags: ['企业', '企业版', 'B2B'], activeClass: 'bg-slate-600 hover:bg-slate-700' },
       { key: 'api', label: 'API接口', icon: <Zap className="h-3.5 w-3.5" />, tags: ['API'], activeClass: 'bg-yellow-600 hover:bg-yellow-700' },
       { key: 'multimodal', label: '多模态', icon: <Bot className="h-3.5 w-3.5" />, tags: ['多模态', '多模型'], activeClass: 'bg-violet-600 hover:bg-violet-700' },
     ]
@@ -102,36 +102,37 @@ export const filterGroups: Record<string, FilterGroup> = {
     label: '应用场景',
     icon: <Briefcase className="h-4 w-4" />,
     options: [
-      { key: 'marketing', label: '营销', icon: <Briefcase className="h-3.5 w-3.5" />, tags: ['营销', 'SEO', '销售'], activeClass: 'bg-orange-600 hover:bg-orange-700' },
-      { key: 'education', label: '教育', icon: <GraduationCap className="h-3.5 w-3.5" />, tags: ['教育', '学习', '辅导', 'K12'], activeClass: 'bg-teal-600 hover:bg-teal-700' },
-      { key: 'design', label: '设计', icon: <Palette className="h-3.5 w-3.5" />, tags: ['设计', 'UI', 'Logo'], activeClass: 'bg-fuchsia-600 hover:bg-fuchsia-700' },
-      { key: 'productivity', label: '效率', icon: <Zap className="h-3.5 w-3.5" />, tags: ['效率', '自动化', '协作'], activeClass: 'bg-lime-600 hover:bg-lime-700' },
-      { key: 'research', label: '研究', icon: <SearchIcon className="h-3.5 w-3.5" />, tags: ['研究', '学术', '论文'], activeClass: 'bg-sky-600 hover:bg-sky-700' },
-      { key: 'health', label: '健康', icon: <Heart className="h-3.5 w-3.5" />, tags: ['健康', '医疗', '健身'], activeClass: 'bg-rose-600 hover:bg-rose-700' },
-      { key: 'finance', label: '金融', icon: <Wallet className="h-3.5 w-3.5" />, tags: ['金融', '股票', '投资'], activeClass: 'bg-emerald-600 hover:bg-emerald-700' },
+      { key: 'marketing', label: '营销', icon: <Briefcase className="h-3.5 w-3.5" />, tags: ['营销', 'SEO', '销售', '广告', '电商'], activeClass: 'bg-orange-600 hover:bg-orange-700' },
+      { key: 'education', label: '教育', icon: <GraduationCap className="h-3.5 w-3.5" />, tags: ['教育', '学习', '辅导', 'K12', '学生', '教学'], activeClass: 'bg-teal-600 hover:bg-teal-700' },
+      { key: 'design', label: '设计', icon: <Palette className="h-3.5 w-3.5" />, tags: ['设计', 'UI', 'Logo', '3D', '动画'], activeClass: 'bg-fuchsia-600 hover:bg-fuchsia-700' },
+      { key: 'productivity', label: '效率', icon: <Zap className="h-3.5 w-3.5" />, tags: ['效率', '自动化', '协作', '办公', '工作流'], activeClass: 'bg-lime-600 hover:bg-lime-700' },
+      { key: 'research', label: '研究', icon: <SearchIcon className="h-3.5 w-3.5" />, tags: ['研究', '学术', '论文', '文献', '摘要'], activeClass: 'bg-sky-600 hover:bg-sky-700' },
+      { key: 'health', label: '健康', icon: <Heart className="h-3.5 w-3.5" />, tags: ['健康', '医疗', '健身', '心理', '诊断'], activeClass: 'bg-rose-600 hover:bg-rose-700' },
+      { key: 'finance', label: '金融', icon: <Wallet className="h-3.5 w-3.5" />, tags: ['金融', '股票', '投资', '理财', '风控'], activeClass: 'bg-emerald-600 hover:bg-emerald-700' },
     ]
   },
   platform: {
     label: '平台',
     icon: <Monitor className="h-4 w-4" />,
     options: [
-      { key: 'web', label: '网页版', icon: <Monitor className="h-3.5 w-3.5" />, tags: ['网站', '在线', '浏览器'], activeClass: 'bg-blue-600 hover:bg-blue-700' },
-      { key: 'mobile', label: '移动端', icon: <Smartphone className="h-3.5 w-3.5" />, tags: ['手机', '苹果', 'Mac'], activeClass: 'bg-green-600 hover:bg-green-700' },
-      { key: 'plugin', label: '插件', icon: <Zap className="h-3.5 w-3.5" />, tags: ['插件', 'Chrome', 'VSCode'], activeClass: 'bg-purple-600 hover:bg-purple-700' },
+      { key: 'web', label: '网页版', icon: <Monitor className="h-3.5 w-3.5" />, tags: ['网站', '在线', '浏览器', '网页'], activeClass: 'bg-blue-600 hover:bg-blue-700' },
+      { key: 'mobile', label: '移动端', icon: <Smartphone className="h-3.5 w-3.5" />, tags: ['手机', '苹果', 'Mac', 'iOS', '移动'], activeClass: 'bg-green-600 hover:bg-green-700' },
+      { key: 'plugin', label: '插件', icon: <Zap className="h-3.5 w-3.5" />, tags: ['插件', 'Chrome', 'VSCode', '浏览器'], activeClass: 'bg-purple-600 hover:bg-purple-700' },
     ]
   },
   provider: {
     label: '厂商',
     icon: <Building2 className="h-4 w-4" />,
     options: [
-      { key: 'openai', label: 'OpenAI', icon: <Bot className="h-3.5 w-3.5" />, tags: ['OpenAI', 'GPT'], activeClass: 'bg-emerald-600 hover:bg-emerald-700' },
+      { key: 'openai', label: 'OpenAI', icon: <Bot className="h-3.5 w-3.5" />, tags: ['OpenAI', 'GPT', 'DALLE'], activeClass: 'bg-emerald-600 hover:bg-emerald-700' },
       { key: 'google', label: 'Google', icon: <Bot className="h-3.5 w-3.5" />, tags: ['Google'], activeClass: 'bg-blue-600 hover:bg-blue-700' },
-      { key: 'meta', label: 'Meta', icon: <Bot className="h-3.5 w-3.5" />, tags: ['Meta'], activeClass: 'bg-sky-600 hover:bg-sky-700' },
-      { key: 'microsoft', label: '微软', icon: <Bot className="h-3.5 w-3.5" />, tags: ['微软'], activeClass: 'bg-cyan-600 hover:bg-cyan-700' },
+      { key: 'meta', label: 'Meta', icon: <Bot className="h-3.5 w-3.5" />, tags: ['Meta', 'Llama'], activeClass: 'bg-sky-600 hover:bg-sky-700' },
+      { key: 'microsoft', label: '微软', icon: <Bot className="h-3.5 w-3.5" />, tags: ['微软', 'Office'], activeClass: 'bg-cyan-600 hover:bg-cyan-700' },
       { key: 'baidu', label: '百度', icon: <Bot className="h-3.5 w-3.5" />, tags: ['百度'], activeClass: 'bg-blue-600 hover:bg-blue-700' },
       { key: 'alibaba', label: '阿里', icon: <Bot className="h-3.5 w-3.5" />, tags: ['阿里'], activeClass: 'bg-orange-600 hover:bg-orange-700' },
       { key: 'tencent', label: '腾讯', icon: <Bot className="h-3.5 w-3.5" />, tags: ['腾讯'], activeClass: 'bg-blue-600 hover:bg-blue-700' },
-      { key: 'bytedance', label: '字节', icon: <Bot className="h-3.5 w-3.5" />, tags: ['字节'], activeClass: 'bg-slate-600 hover:bg-slate-700' },
+      { key: 'bytedance', label: '字节', icon: <Bot className="h-3.5 w-3.5" />, tags: ['字节', '抖音'], activeClass: 'bg-slate-600 hover:bg-slate-700' },
+      { key: 'xunfei', label: '讯飞', icon: <Bot className="h-3.5 w-3.5" />, tags: ['讯飞'], activeClass: 'bg-indigo-600 hover:bg-indigo-700' },
     ]
   }
 };
