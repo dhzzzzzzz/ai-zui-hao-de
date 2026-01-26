@@ -44,7 +44,7 @@ export const HotTools = () => {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-amber-500/10 to-orange-500/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="container relative z-10">
+      <div className="relative z-10">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 mb-4">
