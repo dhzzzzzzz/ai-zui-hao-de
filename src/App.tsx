@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
+import Explore from "./pages/Explore";
 import SmartSearchPage from "./pages/SmartSearchPage";
 import Category from "./pages/Category";
 import ToolDetail from "./pages/ToolDetail";
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/explore" element={<Explore />} />
             <Route path="/smart-search" element={<SmartSearchPage />} />
             <Route path="/category/:slug" element={<Category />} />
             <Route path="/tool/:id" element={<ToolDetail />} />
