@@ -13,11 +13,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export const Header = () => {
   const { user, isAdmin, signOut } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +46,7 @@ export const Header = () => {
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="搜索AI工具..."
+              placeholder={t('search.placeholder')}
               className="pl-10 pr-4"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -56,19 +59,20 @@ export const Header = () => {
           <Button variant="ghost" size="sm" asChild>
             <Link to="/explore" className="gap-1.5">
               <SlidersHorizontal className="h-4 w-4" />
-              探索
+              {t('nav.explore')}
             </Link>
           </Button>
           <Button variant="ghost" size="sm" asChild>
             <Link to="/smart-search" className="gap-1.5">
               <Sparkles className="h-4 w-4" />
-              智能推荐
+              {t('nav.smartSearch')}
             </Link>
           </Button>
         </nav>
 
         {/* Right Section */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
+          <LanguageSwitcher />
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -89,20 +93,20 @@ export const Header = () => {
                 <DropdownMenuItem asChild>
                   <Link to="/profile" className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
-                    个人中心
+                    {t('nav.profile')}
                   </Link>
                 </DropdownMenuItem>
                 {isAdmin && (
                   <DropdownMenuItem asChild>
                     <Link to="/admin" className="cursor-pointer">
                       <Settings className="mr-2 h-4 w-4" />
-                      后台管理
+                      {t('nav.admin')}
                     </Link>
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut} className="cursor-pointer">
-                  退出登录
+                  {t('nav.logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -111,11 +115,11 @@ export const Header = () => {
               <Button variant="ghost" asChild>
                 <Link to="/login">
                   <LogIn className="mr-2 h-4 w-4" />
-                  登录
+                  {t('nav.login')}
                 </Link>
               </Button>
               <Button asChild>
-                <Link to="/register">注册</Link>
+                <Link to="/register">{t('nav.register')}</Link>
               </Button>
             </div>
           )}
