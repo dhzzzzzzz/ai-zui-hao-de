@@ -1,8 +1,11 @@
 import { Layout } from '@/components/layout/Layout';
 import { SmartSearch } from '@/components/search/SmartSearch';
 import { Sparkles, Bot, Zap, Brain } from 'lucide-react';
+import { useToolsCount, formatToolsCount } from '@/hooks/useToolsCount';
 
 const SmartSearchPage = () => {
+  const { data: toolsCount } = useToolsCount();
+  const formattedCount = formatToolsCount(toolsCount);
   return (
     <Layout>
       <div className="relative min-h-[calc(100vh-200px)] overflow-hidden">
@@ -32,7 +35,7 @@ const SmartSearchPage = () => {
             </h1>
 
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              不知道该用什么AI工具？告诉我您想做什么，AI将从4000+工具中为您精选最合适的推荐
+              不知道该用什么AI工具？告诉我您想做什么，AI将从{formattedCount}工具中为您精选最合适的推荐
             </p>
 
             {/* Features */}
