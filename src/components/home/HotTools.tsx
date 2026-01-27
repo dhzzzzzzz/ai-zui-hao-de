@@ -27,7 +27,7 @@ export const HotTools = () => {
       const selectFields =
         'id,name,description,website_url,logo_url,category_id,is_featured,is_hot,view_count,rating_avg,rating_count,tags,created_at,updated_at';
 
-      const [first, second] = await Promise.all([
+      const [first, second, third, fourth] = await Promise.all([
         supabase
           .from('ai_tools')
           .select(selectFields)
@@ -38,12 +38,24 @@ export const HotTools = () => {
           .select(selectFields)
           .order('view_count', { ascending: false })
           .range(1000, 1999),
+        supabase
+          .from('ai_tools')
+          .select(selectFields)
+          .order('view_count', { ascending: false })
+          .range(2000, 2999),
+        supabase
+          .from('ai_tools')
+          .select(selectFields)
+          .order('view_count', { ascending: false })
+          .range(3000, 3999),
       ]);
 
       if (first.error) throw first.error;
       if (second.error) throw second.error;
+      if (third.error) throw third.error;
+      if (fourth.error) throw fourth.error;
 
-      const all = ([...(first.data || []), ...(second.data || [])] as unknown) as AiTool[];
+      const all = ([...(first.data || []), ...(second.data || []), ...(third.data || []), ...(fourth.data || [])] as unknown) as AiTool[];
       return all;
     },
   });

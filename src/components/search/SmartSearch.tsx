@@ -150,7 +150,7 @@ export const SmartSearch = () => {
             <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary animate-ping" />
           </div>
           <p className="mt-4 text-muted-foreground">AI正在分析您的需求...</p>
-          <p className="text-sm text-muted-foreground/60">正在从1000+工具中筛选最匹配的推荐</p>
+          <p className="text-sm text-muted-foreground/60">正在从4000+工具中筛选最匹配的推荐</p>
         </div>
       )}
 

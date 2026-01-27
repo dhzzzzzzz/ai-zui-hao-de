@@ -32,7 +32,7 @@ const SmartSearchPage = () => {
             </h1>
 
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              不知道该用什么AI工具？告诉我您想做什么，AI将从2000+工具中为您精选最合适的推荐
+              不知道该用什么AI工具？告诉我您想做什么，AI将从4000+工具中为您精选最合适的推荐
             </p>
 
             {/* Features */}
