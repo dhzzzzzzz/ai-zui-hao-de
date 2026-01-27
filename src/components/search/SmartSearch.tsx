@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { AiTool } from '@/types/database';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useToolsCount, formatToolsCount } from '@/hooks/useToolsCount';
 
 interface RecommendedTool extends AiTool {
   recommendation_reason?: string;
@@ -24,6 +25,8 @@ export const SmartSearch = () => {
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<SmartSearchResult | null>(null);
+  const { data: toolsCount } = useToolsCount();
+  const formattedCount = formatToolsCount(toolsCount);
 
   const exampleQueries = [
     '我想做短视频，需要AI帮我生成脚本、配音和剪辑',
@@ -150,7 +153,7 @@ export const SmartSearch = () => {
             <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary animate-ping" />
           </div>
           <p className="mt-4 text-muted-foreground">AI正在分析您的需求...</p>
-          <p className="text-sm text-muted-foreground/60">正在从4000+工具中筛选最匹配的推荐</p>
+          <p className="text-sm text-muted-foreground/60">正在从{formattedCount}工具中筛选最匹配的推荐</p>
         </div>
       )}
 
