@@ -24,6 +24,7 @@ const categoryIcons: Record<string, string> = {
   'ai-business': '📊',
   'ai-architecture': '🏗️',
   'ai-design': '🎯',
+  'ai-agent': '🤖',
   'ai-other': '🔧',
 };
 
@@ -42,6 +43,7 @@ const categoryColors: Record<string, { bg: string; border: string; text: string 
   'ai-finance': { bg: 'from-emerald-500/10 to-green-500/10', border: 'border-emerald-500/20', text: 'text-emerald-600 dark:text-emerald-400' },
   'ai-business': { bg: 'from-slate-500/10 to-gray-500/10', border: 'border-slate-500/20', text: 'text-slate-600 dark:text-slate-400' },
   'ai-design': { bg: 'from-orange-500/10 to-amber-500/10', border: 'border-orange-500/20', text: 'text-orange-600 dark:text-orange-400' },
+  'ai-agent': { bg: 'from-cyan-500/10 to-teal-500/10', border: 'border-cyan-500/20', text: 'text-cyan-600 dark:text-cyan-400' },
 };
 
 interface CategoryWithTools extends Category {
