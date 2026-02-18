@@ -23,6 +23,7 @@ const categoryIcons: Record<string, string> = {
   'ai-business': '📊',
   'ai-design': '🎯',
   'ai-architecture': '🏗️',
+  'ai-agent': '🤖',
   'ai-other': '🔧',
 };
 
