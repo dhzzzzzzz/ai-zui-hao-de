@@ -25,7 +25,7 @@ export const HotTools = () => {
       // IMPORTANT: 主页筛选需要覆盖"全部工具库"，不能仅限于 is_hot。
       // PostgREST 通常对单次返回行数有上限（常见为 1000），这里做分段拉取以覆盖 1300+ 数据。
       const selectFields =
-        'id,name,description,website_url,logo_url,category_id,is_featured,is_hot,view_count,rating_avg,rating_count,tags,created_at,updated_at';
+        'id,name,description,description_en,description_ja,description_ko,website_url,logo_url,category_id,is_featured,is_hot,view_count,rating_avg,rating_count,tags,created_at,updated_at';
 
       const [first, second, third, fourth] = await Promise.all([
         supabase

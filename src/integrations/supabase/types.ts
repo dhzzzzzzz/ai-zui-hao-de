@@ -58,7 +58,13 @@ export type Database = {
           category_id: string | null
           created_at: string
           description: string | null
+          description_en: string | null
+          description_ja: string | null
+          description_ko: string | null
           detailed_description: string | null
+          detailed_description_en: string | null
+          detailed_description_ja: string | null
+          detailed_description_ko: string | null
           id: string
           is_featured: boolean | null
           is_hot: boolean | null
@@ -75,7 +81,13 @@ export type Database = {
           category_id?: string | null
           created_at?: string
           description?: string | null
+          description_en?: string | null
+          description_ja?: string | null
+          description_ko?: string | null
           detailed_description?: string | null
+          detailed_description_en?: string | null
+          detailed_description_ja?: string | null
+          detailed_description_ko?: string | null
           id?: string
           is_featured?: boolean | null
           is_hot?: boolean | null
@@ -92,7 +104,13 @@ export type Database = {
           category_id?: string | null
           created_at?: string
           description?: string | null
+          description_en?: string | null
+          description_ja?: string | null
+          description_ko?: string | null
           detailed_description?: string | null
+          detailed_description_en?: string | null
+          detailed_description_ja?: string | null
+          detailed_description_ko?: string | null
           id?: string
           is_featured?: boolean | null
           is_hot?: boolean | null

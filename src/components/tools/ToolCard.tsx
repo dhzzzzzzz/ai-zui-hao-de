@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { AiTool } from '@/types/database';
 import { cn } from '@/lib/utils';
+import { useTranslatedDescription } from '@/hooks/useTranslatedTool';
 
 interface ToolCardProps {
   tool: AiTool;
@@ -22,6 +23,7 @@ export const ToolCard = ({
 }: ToolCardProps) => {
   const [imgError, setImgError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const { getDescription } = useTranslatedDescription();
 
   return (
     <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 border-border/50 bg-gradient-to-br from-card to-card/80">
@@ -92,7 +94,7 @@ export const ToolCard = ({
             </div>
 
             <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-              {tool.description || '暂无描述'}
+              {getDescription(tool)}
             </p>
 
             {/* Rating & Tags */}

@@ -11,6 +11,8 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslatedDescription } from '@/hooks/useTranslatedTool';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { AiTool, Comment, Category } from '@/types/database';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -22,6 +24,8 @@ const ToolDetail = () => {
   const queryClient = useQueryClient();
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(5);
+  const { getDescription, getDetailedDescription } = useTranslatedDescription();
+  const { language, t } = useLanguage();
 
   const { data: tool, isLoading } = useQuery({
     queryKey: ['tool', id],
@@ -201,7 +205,7 @@ const ToolDetail = () => {
               </div>
 
               <p className="text-muted-foreground mb-4 max-w-2xl text-lg">
-                {tool.description || '暂无描述'}
+                {getDescription(tool)}
               </p>
 
               {/* Stats */}
@@ -264,17 +268,17 @@ const ToolDetail = () => {
         </div>
 
         {/* Detailed Description */}
-        {(tool as any).detailed_description && (
+        {getDetailedDescription(tool) && (
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Globe className="h-5 w-5" />
-                详细介绍
+                {language === 'en' ? 'Details' : language === 'ja' ? '詳細紹介' : language === 'ko' ? '상세 소개' : '详细介绍'}
               </CardTitle>
             </CardHeader>
             <CardContent className="prose prose-sm dark:prose-invert max-w-none">
               <div className="whitespace-pre-wrap leading-relaxed">
-                {(tool as any).detailed_description.split('\n').map((line: string, index: number) => {
+                {(getDetailedDescription(tool) || '').split('\n').map((line: string, index: number) => {
                   if (line.startsWith('## ')) {
                     return <h2 key={index} className="text-xl font-bold mt-6 mb-3 text-foreground">{line.replace('## ', '')}</h2>;
                   }
