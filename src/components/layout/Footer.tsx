@@ -110,7 +110,7 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="mailto:johnsonhaozhongdai@gmail.com" className="hover:text-foreground transition-colors">
+                <a href="mailto:jd2005@bu.edu" className="hover:text-foreground transition-colors">
                   反馈建议
                 </a>
               </li>
@@ -123,8 +123,8 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <span>📧</span>
-                <a href="mailto:johnsonhaozhongdai@gmail.com" className="hover:text-foreground transition-colors">
-                  johnsonhaozhongdai@gmail.com
+                <a href="mailto:jd2005@bu.edu" className="hover:text-foreground transition-colors">
+                  jd2005@bu.edu
                 </a>
               </li>
             </ul>
