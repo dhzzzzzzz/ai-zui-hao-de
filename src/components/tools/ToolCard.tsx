@@ -53,6 +53,8 @@ export const ToolCard = ({
                   <img
                     src={tool.logo_url}
                     alt={tool.name}
+                    loading="lazy"
+                    decoding="async"
                     className={cn(
                       "h-10 w-10 rounded-xl object-contain transition-all duration-300",
                       imgLoaded ? "opacity-100" : "opacity-0"
