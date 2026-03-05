@@ -3,11 +3,15 @@ import { HeroSearch } from '@/components/home/HeroSearch';
 import { HotTools } from '@/components/home/HotTools';
 import { CategorySection } from '@/components/home/CategorySection';
 import { NewsSidebar } from '@/components/home/NewsSidebar';
+import { OscarRankings } from '@/components/home/OscarRankings';
 
 const Index = () => {
   return (
     <Layout>
       <HeroSearch />
+      
+      {/* Oscar Rankings - Full width */}
+      <OscarRankings />
       
       {/* Hot Tools section with news sidebar */}
       <div className="container">
