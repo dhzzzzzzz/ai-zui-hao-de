@@ -169,9 +169,6 @@ export const CategorySection = () => {
                         </p>
                       )}
                     </div>
-                    <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full bg-muted text-xs font-medium text-muted-foreground">
-                      {category.tools.length} 个工具
-                    </span>
                   </div>
                   <Button 
                     variant="ghost" 
