@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**URL**:(https://bestaidirector.com)
 
 ## How can I edit this code?
 
