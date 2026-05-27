@@ -55,7 +55,7 @@ export const NewsSidebar = () => {
           <Skeleton className="h-5 w-24" />
         </div>
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="space-y-2 p-3 rounded-lg border border-border/50">
+          <div key={i} className="space-y-2 py-2">
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-3 w-3/4" />
             <Skeleton className="h-3 w-1/2" />
@@ -67,7 +67,7 @@ export const NewsSidebar = () => {
 
   if (!news || news.length === 0) {
     return (
-      <div className="sticky top-20 p-4 rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm">
+      <div className="sticky top-20">
         <div className="flex items-center gap-2 mb-4">
           <Newspaper className="h-5 w-5 text-primary" />
           <h3 className="font-semibold">AI 资讯</h3>
@@ -82,11 +82,9 @@ export const NewsSidebar = () => {
   return (
     <div className="sticky top-20">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-border/60">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-            <Newspaper className="h-4 w-4 text-primary" />
-          </div>
+          <Newspaper className="h-5 w-5 text-primary" />
           <h3 className="font-bold text-lg">AI 资讯</h3>
         </div>
         <Badge variant="secondary" className="text-xs">
@@ -96,59 +94,57 @@ export const NewsSidebar = () => {
       </div>
 
       {/* News List */}
-      <ScrollArea className="h-[calc(100vh-180px)] pr-3">
-        <div className="space-y-3">
-          {news.map((item, index) => (
-            <a
-              key={item.id}
-              href={item.source_url || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "group block p-3 rounded-xl border transition-all duration-200",
-                "hover:border-primary/30 hover:bg-primary/5 hover:shadow-sm",
-                item.is_hot 
-                  ? "border-destructive/30 bg-gradient-to-br from-destructive/5 to-destructive/10" 
-                  : "border-border/50 bg-card/50"
-              )}
-            >
-              {/* Title */}
-              <div className="flex items-start gap-2 mb-2">
-                {item.is_hot && (
-                  <Flame className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+      <ScrollArea className="h-[calc(100vh-200px)] pr-3">
+        <ul className="divide-y divide-border/40">
+          {news.map((item) => (
+            <li key={item.id}>
+              <a
+                href={item.source_url || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "group block py-3 transition-colors",
+                  item.is_hot && "pl-3 -ml-3 border-l-2 border-destructive/60"
                 )}
-                <h4 className={cn(
-                  "text-sm font-medium leading-snug line-clamp-2 group-hover:text-primary transition-colors",
-                  item.is_hot && "text-destructive"
-                )}>
-                  {item.title}
-                </h4>
-              </div>
-
-              {/* Summary */}
-              {item.summary && (
-                <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
-                  {item.summary}
-                </p>
-              )}
-
-              {/* Meta */}
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  {item.source && (
-                    <span className="text-primary/70">{item.source}</span>
+              >
+                {/* Title */}
+                <div className="flex items-start gap-2 mb-1.5">
+                  {item.is_hot && (
+                    <Flame className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
                   )}
-                  <span>{formatTime(item.published_at)}</span>
+                  <h4 className={cn(
+                    "text-sm font-medium leading-snug line-clamp-2 group-hover:text-primary transition-colors",
+                    item.is_hot && "text-destructive"
+                  )}>
+                    {item.title}
+                  </h4>
                 </div>
-                <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-            </a>
+
+                {/* Summary */}
+                {item.summary && (
+                  <p className="text-xs text-muted-foreground line-clamp-2 mb-1.5">
+                    {item.summary}
+                  </p>
+                )}
+
+                {/* Meta */}
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    {item.source && (
+                      <span className="text-primary/70">{item.source}</span>
+                    )}
+                    <span>{formatTime(item.published_at)}</span>
+                  </div>
+                  <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </ScrollArea>
 
       {/* View More Link */}
-      <div className="mt-4 pt-3 border-t border-border/50">
+      <div className="mt-4 pt-3 border-t border-border/40">
         <button className="w-full flex items-center justify-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors py-2">
           查看更多资讯
           <ChevronRight className="h-4 w-4" />
