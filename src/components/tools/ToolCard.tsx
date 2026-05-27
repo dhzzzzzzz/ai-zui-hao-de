@@ -26,27 +26,17 @@ export const ToolCard = ({
   const { getDescription } = useTranslatedDescription();
 
   return (
-    <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 border-border/50 bg-gradient-to-br from-card to-card/80">
-      {/* Decorative gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      
+    <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-md hover:border-primary/30 hover:-translate-y-0.5 border-border/60 bg-card">
       <CardContent className="relative p-5">
         <div className="flex items-start gap-4">
           {/* Logo Container */}
           <Link to={`/tool/${tool.id}`} className="shrink-0">
             <div className={cn(
-              "relative flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-300",
-              "bg-gradient-to-br from-background via-background to-muted/50",
-              "border-2 border-border/50 group-hover:border-primary/30",
-              "shadow-sm group-hover:shadow-lg group-hover:shadow-primary/10",
-              "group-hover:scale-105"
+              "relative flex h-16 w-16 items-center justify-center rounded-2xl transition-transform duration-300",
+              "bg-muted/40 group-hover:scale-105"
             )}>
-              {/* Gradient ring on hover */}
-              <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-sm" />
-              
               {tool.logo_url && !imgError ? (
                 <>
-                  {/* Loading skeleton */}
                   {!imgLoaded && (
                     <div className="absolute inset-3 rounded-xl bg-muted animate-pulse" />
                   )}
@@ -64,7 +54,7 @@ export const ToolCard = ({
                   />
                 </>
               ) : (
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
                   <span className="text-lg font-bold text-primary-foreground">
                     {tool.name.charAt(0).toUpperCase()}
                   </span>
