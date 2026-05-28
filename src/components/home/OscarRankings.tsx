@@ -169,23 +169,16 @@ export const OscarRankings = () => {
   });
 
   return (
-    <section className="relative py-16 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-1/3 w-80 h-80 bg-gradient-to-br from-yellow-500/8 to-amber-500/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-gradient-to-br from-orange-500/6 to-red-500/6 rounded-full blur-3xl" />
-      </div>
-
-      <div className="container relative z-10">
+    <section className="relative py-16 border-t border-border/60">
+      <div className="container relative">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500/10 to-amber-500/10 border border-yellow-500/20 mb-4">
-            <Trophy className="h-5 w-5 text-yellow-500" />
-            <span className="text-sm font-medium text-yellow-700 dark:text-yellow-400">Oscar 排行榜</span>
-            <TrendingUp className="h-4 w-4 text-yellow-500" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border bg-muted/40 mb-4">
+            <Trophy className="h-3.5 w-3.5 text-primary" />
+            <span className="text-xs font-medium text-muted-foreground">Oscar 排行榜</span>
           </div>
-          <h2 className="text-3xl font-bold tracking-tight mb-2">
-            AI工具 <span className="bg-gradient-to-r from-yellow-500 to-amber-500 bg-clip-text text-transparent">Oscar 排名</span>
+          <h2 className="text-3xl font-bold tracking-tight mb-2 text-foreground">
+            AI 工具 Oscar 排名
           </h2>
           <p className="text-muted-foreground max-w-lg">
             综合浏览量、评分和评价数等维度，为每个类别评选出最受欢迎的Top 3工具
