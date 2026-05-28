@@ -2,98 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Restrained brand palette:
+   - Warm off-white paper background
+   - Near-black ink for text
+   - Single terracotta accent (used sparingly for interaction/emphasis)
+   All colors are HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Surfaces */
+    --background: 36 25% 97%;          /* warm paper */
+    --foreground: 20 14% 12%;          /* near-black ink */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 36 25% 99%;
+    --card-foreground: 20 14% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 36 25% 99%;
+    --popover-foreground: 20 14% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Single brand accent — terracotta */
+    --primary: 14 55% 45%;
+    --primary-foreground: 36 25% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 30 12% 92%;
+    --secondary-foreground: 20 14% 18%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 30 12% 94%;
+    --muted-foreground: 25 8% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 14 55% 45%;
+    --accent-foreground: 36 25% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 36 25% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 28 14% 86%;
+    --input: 28 14% 86%;
+    --ring: 14 55% 45%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
-    /* Custom tool card colors */
-    --tool-gradient-start: 221 83% 53%;
-    --tool-gradient-end: 262 83% 58%;
-    --tool-shadow: 221 83% 53% / 0.15;
+    --sidebar-background: 36 22% 96%;
+    --sidebar-foreground: 20 14% 18%;
+    --sidebar-primary: 14 55% 45%;
+    --sidebar-primary-foreground: 36 25% 98%;
+    --sidebar-accent: 30 12% 92%;
+    --sidebar-accent-foreground: 20 14% 18%;
+    --sidebar-border: 28 14% 86%;
+    --sidebar-ring: 14 55% 45%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 24 10% 8%;
+    --foreground: 36 18% 92%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 24 10% 10%;
+    --card-foreground: 36 18% 92%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 24 10% 10%;
+    --popover-foreground: 36 18% 92%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 14 60% 55%;
+    --primary-foreground: 24 10% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 24 8% 16%;
+    --secondary-foreground: 36 18% 92%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 24 8% 14%;
+    --muted-foreground: 30 6% 62%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 14 60% 55%;
+    --accent-foreground: 24 10% 8%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 55% 50%;
+    --destructive-foreground: 36 18% 92%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 24 8% 18%;
+    --input: 24 8% 18%;
+    --ring: 14 60% 55%;
 
-    /* Custom tool card colors - dark mode */
-    --tool-gradient-start: 221 83% 60%;
-    --tool-gradient-end: 262 83% 65%;
-    --tool-shadow: 221 83% 53% / 0.25;
+    --sidebar-background: 24 10% 9%;
+    --sidebar-foreground: 36 18% 90%;
+    --sidebar-primary: 14 60% 55%;
+    --sidebar-primary-foreground: 24 10% 8%;
+    --sidebar-accent: 24 8% 16%;
+    --sidebar-accent-foreground: 36 18% 90%;
+    --sidebar-border: 24 8% 18%;
+    --sidebar-ring: 14 60% 55%;
   }
 }
 

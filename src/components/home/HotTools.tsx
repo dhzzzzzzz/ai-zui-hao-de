@@ -165,23 +165,16 @@ export const HotTools = () => {
   };
 
   return (
-    <section id="hot-tools-section" className="relative py-16 overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-amber-500/10 to-orange-500/10 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative z-10">
+    <section id="hot-tools-section" className="relative py-16">
+      <div className="relative">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 mb-4">
-            <Flame className="h-5 w-5 text-orange-500 animate-pulse" />
-            <span className="text-sm font-medium text-orange-600 dark:text-orange-400">热门推荐</span>
-            <TrendingUp className="h-4 w-4 text-orange-500" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border bg-muted/40 mb-4">
+            <Flame className="h-3.5 w-3.5 text-primary" />
+            <span className="text-xs font-medium text-muted-foreground">热门推荐</span>
           </div>
-          <h2 className="text-3xl font-bold tracking-tight mb-2">
-            最受欢迎的 <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">AI工具</span>
+          <h2 className="text-3xl font-bold tracking-tight mb-2 text-foreground">
+            最受欢迎的 AI 工具
           </h2>
           <p className="text-muted-foreground max-w-lg">
             精选用户评价最高、使用最多的AI工具，助你快速找到最适合的解决方案

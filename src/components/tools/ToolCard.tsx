@@ -73,13 +73,13 @@ export const ToolCard = ({
                 {tool.name}
               </Link>
               {tool.is_hot && (
-                <Badge variant="destructive" className="shrink-0 text-xs px-2 py-0.5 bg-gradient-to-r from-orange-500 to-red-500 border-0">
-                  <Sparkles className="h-3 w-3 mr-1" />
+                <Badge variant="outline" className="shrink-0 text-xs px-1.5 py-0 h-5 font-normal border-primary/40 text-primary bg-primary/5">
+                  <Sparkles className="h-3 w-3 mr-0.5" />
                   热门
                 </Badge>
               )}
               {tool.is_featured && (
-                <Badge className="shrink-0 text-xs px-2 py-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 border-0 text-white">
+                <Badge variant="outline" className="shrink-0 text-xs px-1.5 py-0 h-5 font-normal border-border text-muted-foreground">
                   ⭐ 精选
                 </Badge>
               )}
@@ -92,12 +92,12 @@ export const ToolCard = ({
             {/* Rating & Tags */}
             <div className="flex items-center gap-2 flex-wrap pt-1">
               {tool.rating_count > 0 && (
-                <div className="flex items-center gap-1 text-sm bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 rounded-full">
-                  <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                  <span className="font-medium text-amber-700 dark:text-amber-400">
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Star className="h-3.5 w-3.5 fill-foreground text-foreground" />
+                  <span className="font-medium text-foreground">
                     {Number(tool.rating_avg).toFixed(1)}
                   </span>
-                  <span className="text-amber-600/70 dark:text-amber-500/70 text-xs">
+                  <span className="text-muted-foreground">
                     ({tool.rating_count})
                   </span>
                 </div>
